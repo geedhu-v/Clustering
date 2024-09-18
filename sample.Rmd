@@ -1,0 +1,75 @@
+---
+title: "sample"
+author: "Geedhu"
+date: "2023-06-27"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## PART 1
+
+```{r}
+# Read the data Assign#2_1.txt
+data_set = read.table("Assign#2_1.txt", header = TRUE,sep = ",")
+
+head(data_set)
+
+# Removing Index Column
+
+data_set <- data_set[,-c(1)]
+
+head(data_set)
+```
+
+# a. Append your initials to all variables in the data frame
+
+```{r}
+new_names <- paste0(names(data_set), "_kv")
+
+colnames(data_set) <- new_names
+
+colnames(data_set)
+```
+
+
+```{r}
+# b. Transform character variables to factor variables.
+
+# To check for character variables
+str(data_set)
+
+# Converting character variables to factor variables
+data_set$Manufacturer_kv <- factor(data_set$Manufacturer_kv)
+data_set$Server_kv <- factor(data_set$Server_kv)
+
+#check if char variables are changed to factor variables
+str(data_set)
+
+```
+
+### QUESTION 2: Outliers
+```{r,fig.width=4, fig.height=3}
+##################### a. Use an appropriate technique demonstrated in class to identify outliers.
+##################### b. Comment on any outliers you see and deal with them appropriately. 
+#####################    Make sure you explain why you dealt with them the way you decided to.
+
+### Box Plots for 1.5 IQR
+#As for all numerical data, check Box Plots
+
+boxplot(data_set$Conn_kv, horizontal=TRUE, pch=20,main = "Connections Made",col="Orange")
+boxplot(data_set$RC_kv, horizontal=TRUE, pch=20,main = "Reconnections Made",col="Light Blue")
+boxplot(data_set$ST_kv, horizontal=TRUE, pch=20,main = "Sessions Timed-Out",col="Pink")
+boxplot(data_set$SMBR_kv, horizontal=TRUE, pch=20,
+        main = "Server Messages Block Received",col="Light Pink")
+boxplot(data_set$SMBT_kv, horizontal=TRUE, pch=20,
+        main = "Server Messages Block Transmitted",col="Maroon")
+boxplot(data_set$BR_kv, horizontal=TRUE, pch=20,main = "Bytes Received",col="Yellow")
+boxplot(data_set$BT_kv, horizontal=TRUE, pch=20,main = "Bytes Transmitted",col="Dark Orange")
+boxplot(data_set$UC_kv, horizontal=TRUE, pch=20,main = "Use Count",col="Blue")
+boxplot(data_set$FA_kv, horizontal=TRUE, pch=20,main = "Files Accessed",col="Violet")
+```
